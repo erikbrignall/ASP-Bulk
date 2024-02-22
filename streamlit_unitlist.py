@@ -83,15 +83,15 @@ st.header('Modal Systems - Fetch Unit Ids')
 #roomTypeId = st.text_input('Parent ID')
 
 # Example dictionary for dropdown choice
-choice_dict = {
+options_dict = {
     "Calderon": "amzn1.alexa.unit.did.AEVDWFO5AUFK4VO7THLPMDTA332LQUIJUVFFD67Y54VQ6GCPXCP2MYIAOYUY5PZTHIQ4DLKHLU3ME5JJH3SYHJCJOMNYM5HMZPEUWQDJ", 
     "Abascal": "amzn1.alexa.unit.did.AF2IN2KOHEXPX36FUNH5PJ36COOXFD5U2GNLSGK5NVAIOR3YQGSCSQPTY4G3UNX6Y5NKMJ3APX66YROFBD6ZPRSX5MV7YW7OP3BLFEZ2"
     }
 
 # Convert dictionary keys (or values) to a list for the dropdown
-selected_key = st.selectbox("Select an option:", options=choice_dict.keys())
+selected_key = st.selectbox("Select an option:", options=options_dict.keys())
 
-selected_value = choice_dict[selected_key]
+selected_value = options_dict[selected_key]
 
 # Set a variable based on the dropdown choice
 roomTypeId = choice_dict[selected_value]
