@@ -8,6 +8,8 @@ import hmac
 
 ############################
 # password module
+st.title('ASP Bulk Management tools')
+
 st.header('Enter password for a new token')
 
 def check_password():
