@@ -149,7 +149,7 @@ if st.button('Submit'):
     
     st.download_button(
         label="Download data as CSV",
-        data=convert_df_to_csv(dfA),
+        data=convert_df_to_csv(dfRoom),
         file_name='unit_ids.csv',
         mime='text/csv',
         )
