@@ -153,6 +153,12 @@ if st.button('Submit to fetch campaigns'):
     
             time.sleep(1)
 
+    def extract_ids(row):
+        return [item['id'] for item in row['targeting']]
+    
+    # Apply the function to the column
+    dfCampaigns['targeting'] = df['targeting'].apply(extract_ids)
+    
     st.dataframe(dfCampaigns, width=800)
 
     def convert_df_to_csv(dfCampaigns):
