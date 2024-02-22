@@ -154,10 +154,10 @@ if st.button('Submit to fetch campaigns'):
             time.sleep(1)
 
     def extract_ids(row):
-        return [item['id'] for item in row['targeting']]
+        return [item['id'] for item in row['values']]
     
     # Apply the function to the column
-    dfCampaigns['targeting'] = df['targeting'].apply(extract_ids)
+    dfCampaigns['targeting'] = dfCampaigns['targeting'].apply(extract_ids)
     
     st.dataframe(dfCampaigns, width=800)
 
