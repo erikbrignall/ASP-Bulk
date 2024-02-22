@@ -91,6 +91,8 @@ choice_dict = {
 # Convert dictionary keys (or values) to a list for the dropdown
 selected_key = st.selectbox("Select an option:", options=choice_dict.keys())
 
+selected_value = options_dict[selected_key]
+
 # Set a variable based on the dropdown choice
 roomTypeId = choice_dict[selected_value]
 parentName = choice_dict[selected_key]
