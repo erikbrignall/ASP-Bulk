@@ -8,10 +8,9 @@ import hmac
 
 ############################
 # password module
-st.title('ASP Bulk Management tools')
+st.title('ASP Bulk Management tools - All Campaigns List')
 
-st.header('Enter password for a new token')
-
+st.write('Click submit to get list of all campaigns')
 def check_password():
     """Returns `True` if the user had the correct password."""
 
@@ -87,71 +86,72 @@ if st.button('Submit to fetch campaigns'):
     # Setting initial nextToken to ignore in the first pass
     nextToken = "notSet"
 
-    while nextToken != None:
-
-        headers = {
-            "Host": "api.eu.amazonalexa.com",
-            "Accept": "application/json",
-            "Authorization": f"Bearer {lwa_token}"
-        }
-
-        if nextToken == "notSet":
-            url = "https://api.eu.amazonalexa.com/v1/proactive/campaigns"
-        else:
-            url =  url = "https://api.eu.amazonalexa.com/v1/proactive/campaigns?nextToken=" + nextToken
-
-        #Making the GET request
-        response = requests.get(url, headers=headers)
-
-        # Checking if the request was successful
-        if response.status_code == 200:
-            print("Request successful!")
-        else:
-            print("Request failed with status code:", response.status_code)
-
-        # review data for list of campaigns
-        review_data = response.text
-
-        # Parse the JSON string into a Python dictionary
-        parsed_json = json.loads(review_data)
-
-        # Convert it back to a string with indentation for readability
-        #formatted_json = json.dumps(parsed_json, indent=4)
-
-        ## CREATE A FUNCTION TO CREATE A TABLE OF ALL CORE FUNCTION INFORMATION
-        # List to store flattened data
-        flattened_data = []
-
-        # Iterate through the JSON to extract relevant data
-        for item in parsed_json['results']:
-            campaign_id = item['campaignId']
-            # extracting the targeting info
-            targeting = item['targeting']
-            for variant in item['suggestion']['variants']:
-                # There might be multiple content values in each variant
-                for content_value in variant['content']['values']:
-                    locale = content_value['locale']
-                    body = content_value['datasources']['displayText']['body']
-                    title = content_value['datasources']['displayText']['title']
-                    img = content_value['datasources']['background']['backgroundImageSource']
-
-
-                    # Append the extracted data to the list
-                    flattened_data.append({
-                        'campaignId': campaign_id,
-                        'targeting': targeting,
-                        'locale': locale,
-                        'body': body,
-                        'title': title,
-                        'img': img
-                    })
-
-        # Create DataFrame
-        dfCampaign = pd.DataFrame(flattened_data)
-        dfCampaigns = pd.concat([dfCampaigns, dfCampaign], ignore_index=True)
-        nextToken = parsed_json['paginationContext']['nextToken']
-
-        time.sleep(2)
+    with st.spinner('Processing...'):
+        while nextToken != None:
+    
+            headers = {
+                "Host": "api.eu.amazonalexa.com",
+                "Accept": "application/json",
+                "Authorization": f"Bearer {lwa_token}"
+            }
+    
+            if nextToken == "notSet":
+                url = "https://api.eu.amazonalexa.com/v1/proactive/campaigns"
+            else:
+                url =  url = "https://api.eu.amazonalexa.com/v1/proactive/campaigns?nextToken=" + nextToken
+    
+            #Making the GET request
+            response = requests.get(url, headers=headers)
+    
+            # Checking if the request was successful
+            if response.status_code == 200:
+                print("Request successful!")
+            else:
+                print("Request failed with status code:", response.status_code)
+    
+            # review data for list of campaigns
+            review_data = response.text
+    
+            # Parse the JSON string into a Python dictionary
+            parsed_json = json.loads(review_data)
+    
+            # Convert it back to a string with indentation for readability
+            #formatted_json = json.dumps(parsed_json, indent=4)
+    
+            ## CREATE A FUNCTION TO CREATE A TABLE OF ALL CORE FUNCTION INFORMATION
+            # List to store flattened data
+            flattened_data = []
+    
+            # Iterate through the JSON to extract relevant data
+            for item in parsed_json['results']:
+                campaign_id = item['campaignId']
+                # extracting the targeting info
+                targeting = item['targeting']
+                for variant in item['suggestion']['variants']:
+                    # There might be multiple content values in each variant
+                    for content_value in variant['content']['values']:
+                        locale = content_value['locale']
+                        body = content_value['datasources']['displayText']['body']
+                        title = content_value['datasources']['displayText']['title']
+                        img = content_value['datasources']['background']['backgroundImageSource']
+    
+    
+                        # Append the extracted data to the list
+                        flattened_data.append({
+                            'campaignId': campaign_id,
+                            'targeting': targeting,
+                            'locale': locale,
+                            'body': body,
+                            'title': title,
+                            'img': img
+                        })
+    
+            # Create DataFrame
+            dfCampaign = pd.DataFrame(flattened_data)
+            dfCampaigns = pd.concat([dfCampaigns, dfCampaign], ignore_index=True)
+            nextToken = parsed_json['paginationContext']['nextToken']
+    
+            time.sleep(1)
 
     st.dataframe(dfCampaigns, width=800)
 
