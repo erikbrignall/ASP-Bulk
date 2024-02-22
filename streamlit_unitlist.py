@@ -132,7 +132,8 @@ if st.button('Submit'):
         
         # append next 50 rooms to dataframe
         nextToken = parsed_json['paginationContext']['nextToken']
-        dfRoom = dfRoom.append(dfRoom2, ignore_index=True)
+        dfRoom = pd.concat([dfRoom, dfRoom2], ignore_index=True)
+        #dfRoom = dfRoom.append(dfRoom2, ignore_index=True)
         df_length = len(dfRoom)
         st.write(df_length)
         time.sleep(2)
