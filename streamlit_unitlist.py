@@ -82,71 +82,73 @@ st.header('Modal Systems - Fetch Unit Ids')
 parentName = st.text_input('Parent Name')
 roomTypeId = st.text_input('Parent ID')
 
-# initiate dataframe to store results
-dfRoom = pd.DataFrame(columns=['unit_ids', 'name'])
+if st.button('Submit'):
 
-# Setting initial nextToken to ignore in the first pass
-nextToken = "notSet"
-
-while nextToken != None:
+    # initiate dataframe to store results
+    dfRoom = pd.DataFrame(columns=['unit_ids', 'name'])
     
-    if nextToken == "notSet":
-        url = "https://api.eu.amazonalexa.com/enterprise/hospitality/v1/rooms?roomTypeId=" + roomTypeId + "&maxResults=50"
-    else:
-        url = "https://api.eu.amazonalexa.com/enterprise/hospitality/v1/rooms?roomTypeId=" + roomTypeId + "&maxResults=50&nextToken=" + nextToken
+    # Setting initial nextToken to ignore in the first pass
+    nextToken = "notSet"
     
-
-    headers = {
-        "Host": "api.eu.amazonalexa.com",
-        "Accept": "application/json",
-        "Authorization": f"Bearer {lwa_token}"
-    }
-
-    #Making the GET request
-    response = requests.get(url, headers=headers)
-
-    # Checking if the request was successful
-    if response.status_code == 200:
-        print("Request successful!")
-        parsed_json = json.loads(response.text)
-        formatted_json = json.dumps(parsed_json, indent=4)
-        #print(formatted_json)
-
-    else:
-        print("Request failed with status code:", response.status_code)
+    while nextToken != None:
+        
+        if nextToken == "notSet":
+            url = "https://api.eu.amazonalexa.com/enterprise/hospitality/v1/rooms?roomTypeId=" + roomTypeId + "&maxResults=50"
+        else:
+            url = "https://api.eu.amazonalexa.com/enterprise/hospitality/v1/rooms?roomTypeId=" + roomTypeId + "&maxResults=50&nextToken=" + nextToken
+        
     
-    extracted_data = []
-
-    # Iterate through the JSON to extract 'id' and 'name' from each room
-    for room in parsed_json['rooms']:
-        room_id = room.get('id', None)  # Using get() method to avoid KeyError if 'id' is missing
-        room_name = room.get('name', None)  # Using get() method to avoid KeyError if 'name' is missing
-
-        # Append the extracted data to the list
-        extracted_data.append({'unit_ids': room_id, 'name': room_name})
-
-    # Create a DataFrame from the extracted data
-    dfRoom2 = pd.DataFrame(extracted_data)
+        headers = {
+            "Host": "api.eu.amazonalexa.com",
+            "Accept": "application/json",
+            "Authorization": f"Bearer {lwa_token}"
+        }
     
-    # append next 50 rooms to dataframe
-    nextToken = parsed_json['paginationContext']['nextToken']
-    dfRoom = dfRoom.append(dfRoom2, ignore_index=True)
-    df_length = len(dfRoom)
-    st.write(df_length)
-    time.sleep(2)
+        #Making the GET request
+        response = requests.get(url, headers=headers)
     
-# View dataframe
-dfRoom['parentName'] = parentName
-
-st.dataframe(dfRoom, width=800)
-
-
-def convert_df_to_csv(dfRoom):
-    return dfRoom.to_csv().encode('utf-8')
-
-st.download_button(
-    label="Download data as CSV",
-    data=convert_df_to_csv(dfA),
-    file_name='unit_ids.csv',
-    mime='text/csv',
-    )
+        # Checking if the request was successful
+        if response.status_code == 200:
+            print("Request successful!")
+            parsed_json = json.loads(response.text)
+            formatted_json = json.dumps(parsed_json, indent=4)
+            #print(formatted_json)
+    
+        else:
+            print("Request failed with status code:", response.status_code)
+        
+        extracted_data = []
+    
+        # Iterate through the JSON to extract 'id' and 'name' from each room
+        for room in parsed_json['rooms']:
+            room_id = room.get('id', None)  # Using get() method to avoid KeyError if 'id' is missing
+            room_name = room.get('name', None)  # Using get() method to avoid KeyError if 'name' is missing
+    
+            # Append the extracted data to the list
+            extracted_data.append({'unit_ids': room_id, 'name': room_name})
+    
+        # Create a DataFrame from the extracted data
+        dfRoom2 = pd.DataFrame(extracted_data)
+        
+        # append next 50 rooms to dataframe
+        nextToken = parsed_json['paginationContext']['nextToken']
+        dfRoom = dfRoom.append(dfRoom2, ignore_index=True)
+        df_length = len(dfRoom)
+        st.write(df_length)
+        time.sleep(2)
+        
+    # View dataframe
+    dfRoom['parentName'] = parentName
+    
+    st.dataframe(dfRoom, width=800)
+    
+    
+    def convert_df_to_csv(dfRoom):
+        return dfRoom.to_csv().encode('utf-8')
+    
+    st.download_button(
+        label="Download data as CSV",
+        data=convert_df_to_csv(dfA),
+        file_name='unit_ids.csv',
+        mime='text/csv',
+        )
