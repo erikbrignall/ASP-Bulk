@@ -149,13 +149,14 @@ if st.button('Submit'):
         # append next 50 rooms to dataframe
         nextToken = parsed_json['paginationContext']['nextToken']
         dfRoom = pd.concat([dfRoom, dfRoom2], ignore_index=True)
-        #dfRoom = dfRoom.append(dfRoom2, ignore_index=True)
-        #df_length = len(dfRoom)
-        #st.write(df_length)
+
         time.sleep(2)
         
     # View dataframe
     dfRoom['parentName'] = parentName
+
+    dfRoom['name'] = pd.to_numeric(dfRoom['name'], errors='coerce')
+    dfRoom = dfRoom.sort_values(by='name')
     
     st.dataframe(dfRoom, width=800)
     
