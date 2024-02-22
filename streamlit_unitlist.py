@@ -66,7 +66,7 @@ try:
         st.write("token is:")
         data = json.loads(response.text)
         lwa_token = data['access_token']
-        st.write(lwa_token)
+        #st.write(lwa_token)
     else:
         st.write("Request failed with status code:", response.status_code)
         st.stop()
