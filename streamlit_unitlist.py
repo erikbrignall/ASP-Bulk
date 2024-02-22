@@ -80,7 +80,20 @@ st.header('Modal Systems - Fetch Unit Ids')
 # SET PROPERTY TO FETCH UNIT IDS FOR AND WRITE TO DATAFRAME
 # Set ID for the property to find child units and names for
 parentName = st.text_input('Parent Name')
-roomTypeId = st.text_input('Parent ID')
+#roomTypeId = st.text_input('Parent ID')
+
+# Example dictionary for dropdown choice
+choice_dict = {"Calderon": "amzn1.alexa.unit.did.AEVDWFO5AUFK4VO7THLPMDTA332LQUIJUVFFD67Y54VQ6GCPXCP2MYIAOYUY5PZTHIQ4DLKHLU3ME5JJH3SYHJCJOMNYM5HMZPEUWQDJ", "Abascal": "amzn1.alexa.unit.did.AF2IN2KOHEXPX36FUNH5PJ36COOXFD5U2GNLSGK5NVAIOR3YQGSCSQPTY4G3UNX6Y5NKMJ3APX66YROFBD6ZPRSX5MV7YW7OP3BLFEZ2"}
+
+# Convert dictionary keys (or values) to a list for the dropdown
+options = list(choice_dict.keys())  # or list(choice_dict.values()) if you want the values instead
+
+# Taking a selection from the user with a dropdown
+selected_option = st.selectbox("Choose an option:", options)
+
+# Set a variable based on the dropdown choice
+roomTypeId = choice_dict[selected_option]
+
 
 if st.button('Submit'):
 
@@ -134,8 +147,8 @@ if st.button('Submit'):
         nextToken = parsed_json['paginationContext']['nextToken']
         dfRoom = pd.concat([dfRoom, dfRoom2], ignore_index=True)
         #dfRoom = dfRoom.append(dfRoom2, ignore_index=True)
-        df_length = len(dfRoom)
-        st.write(df_length)
+        #df_length = len(dfRoom)
+        #st.write(df_length)
         time.sleep(2)
         
     # View dataframe
