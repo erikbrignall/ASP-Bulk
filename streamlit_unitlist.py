@@ -94,8 +94,8 @@ selected_key = st.selectbox("Select an option:", options=options_dict.keys())
 selected_value = options_dict[selected_key]
 
 # Set a variable based on the dropdown choice
-roomTypeId = options_dict[selected_value]
-parentName = options_dict[selected_key]
+roomTypeId = selected_value
+parentName = selected_key
 
 
 if st.button('Submit'):
