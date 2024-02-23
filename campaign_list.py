@@ -151,7 +151,7 @@ if st.button('Submit to fetch campaigns'):
             dfCampaigns = pd.concat([dfCampaigns, dfCampaign], ignore_index=True)
             nextToken = parsed_json['paginationContext']['nextToken']
     
-            time.sleep(1)
+            time.sleep(0.2)
 
     def extract_ids(row):
         return [item['id'] for item in row['values']]
@@ -218,7 +218,7 @@ if st.button('Submit to fetch campaigns'):
     
     ##############
     dfCampaigns['rooms'] = dfCampaigns['targeting'].apply(len)
-    dfCampaigns = dfCampaigns[['campaignId','hotel','locale','body','title','img']]
+    dfCampaigns = dfCampaigns[['campaignId','hotel','rooms','locale','body','title','img']]
     
     st.dataframe(dfCampaigns, width=800)
 
