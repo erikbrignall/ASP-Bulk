@@ -236,7 +236,7 @@ if st.button('Submit to fetch campaigns'):
 
     # Campaign deletion form
     with st.form("my_form"):
-        st.header("Delete campaign")
+        st.header("Delete campaign - work in progress..")
         delCam = st.text_input("Enter campaign id to delete. NOTE: THIS CANNOT BE REVERSED")
         # Every form must have a submit button.
         submitted = st.form_submit_button("Submit")
