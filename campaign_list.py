@@ -86,7 +86,7 @@ if st.button('Submit to fetch campaigns'):
     # Setting initial nextToken to ignore in the first pass
     nextToken = "notSet"
 
-    with st.spinner('Processing...'):
+    with st.spinner('Processing, this will take a minute or two...'):
         while nextToken != None:
     
             headers = {
@@ -159,6 +159,64 @@ if st.button('Submit to fetch campaigns'):
     # Apply the function to the column
     dfCampaigns['targeting'] = dfCampaigns['targeting'].apply(extract_ids)
     dfCampaigns['hotel'] = dfCampaigns['targeting'].apply(lambda x: x[0] if x else None)
+
+    #######################
+    # Getting the hotel name for each campaign
+
+    unitIDs = list(set(dfCampaigns['hotel']))
+
+    # find parent ID for room
+    listHotels = []
+    
+    for unitID in unitIDs: 
+        ## get room parent id
+        url = "https://api.eu.amazonalexa.com//v2/units/" + unitId
+    
+        headers = {
+            "Host": "api.eu.amazonalexa.com",
+            "Accept": "application/json",
+            "Authorization": f"Bearer {lwa_token}"
+        }
+    
+        #Making the GET request
+        response = requests.get(url, headers=headers)
+    
+        # Checking if the request was successful
+        if response.status_code == 200:
+            #print("Request successful!")
+            parsed_json = json.loads(response.text)
+            formatted_json = json.dumps(parsed_json, indent=4)
+            #print(formatted_json)
+        else:
+            print("Request failed with status code:", response.status_code)
+            
+        hotel = parsed_json['parentId']
+    
+        listHotels.append({'hotel': hotel, 'unitId': unitID})
+        
+    # Define the columns explicitly
+    columns = ['hotel', 'unitId']
+    
+    # Convert to DataFrame
+    dfHotels = pd.DataFrame(listHotels, columns=columns)
+    
+    options_dict = {
+        "Calderon": "amzn1.alexa.unit.did.AEVDWFO5AUFK4VO7THLPMDTA332LQUIJUVFFD67Y54VQ6GCPXCP2MYIAOYUY5PZTHIQ4DLKHLU3ME5JJH3SYHJCJOMNYM5HMZPEUWQDJ", 
+        "Abascal": "amzn1.alexa.unit.did.AF2IN2KOHEXPX36FUNH5PJ36COOXFD5U2GNLSGK5NVAIOR3YQGSCSQPTY4G3UNX6Y5NKMJ3APX66YROFBD6ZPRSX5MV7YW7OP3BLFEZ2",
+        "Prado": "amzn1.alexa.unit.did.AFZD2AAXH4FR36XTUCUQ2PNRE44O5S6J6EFMXIZTSPJRQFUWPMBRVFOKIJ35457GAA3LT6ODSKR4NBC73ESY3DG7WPREXUBPMVUKJ3AW"
+        }
+    
+    reversed_dict = {value: key for key, value in options_dict.items()}
+    
+    dfHotels['hotel'] = dfHotels['hotel'].map(reversed_dict)
+    
+    hotelDict = {key: value for key, value in zip(dfHotels['unitId'], dfHotels['hotel'])}
+    #############
+    # Use the HotelDict to map hotel names to original dataframe
+
+    dfCampaigns['hotel'] = dfCampaigns['hotel'].map(hotelDict)
+    
+    ##############
     
     st.dataframe(dfCampaigns, width=800)
 
