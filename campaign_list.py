@@ -220,6 +220,7 @@ if st.button('Submit to fetch campaigns'):
     dfCampaigns['rooms'] = dfCampaigns['targeting'].apply(len)
     dfCampaigns = dfCampaigns[['campaignId','hotel','rooms','locale','body','title','img']]
     dfCampaigns = dfCampaigns.sort_values(by=['hotel', 'campaignId'])
+    dfCampaigns = dfCampaigns.reset_index(drop=True)
     
     st.dataframe(dfCampaigns, width=800)
 
