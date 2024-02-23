@@ -8,7 +8,7 @@ import hmac
 
 ############################
 # password module
-st.title('ASP Bulk Management tools - All Campaigns List')
+st.title('ASP Bulk Management tools')
 
 st.write('Click submit to get list of all campaigns')
 def check_password():
@@ -76,7 +76,7 @@ except:
     st.stop()
 
     
-st.header('Modal Systems - Fetch Campaign List')
+st.header('List Campaigns')
     
 if st.button('Submit to fetch campaigns'):
 
@@ -219,7 +219,7 @@ if st.button('Submit to fetch campaigns'):
     ##############
     dfCampaigns['rooms'] = dfCampaigns['targeting'].apply(len)
     dfCampaigns = dfCampaigns[['campaignId','hotel','rooms','locale','body','title','img']]
-    dfCampaigns = df.sort_values(by=['hotel', 'campaignId'])
+    dfCampaigns = dfCampaigns.sort_values(by=['hotel', 'campaignId'])
     
     st.dataframe(dfCampaigns, width=800)
 
