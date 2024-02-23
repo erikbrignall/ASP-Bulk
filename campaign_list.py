@@ -170,7 +170,7 @@ if st.button('Submit to fetch campaigns'):
     
     for unitID in unitIDs: 
         ## get room parent id
-        url = "https://api.eu.amazonalexa.com//v2/units/" + unitId
+        url = "https://api.eu.amazonalexa.com//v2/units/" + unitID
     
         headers = {
             "Host": "api.eu.amazonalexa.com",
