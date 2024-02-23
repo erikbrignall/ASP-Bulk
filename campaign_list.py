@@ -158,6 +158,7 @@ if st.button('Submit to fetch campaigns'):
     
     # Apply the function to the column
     dfCampaigns['targeting'] = dfCampaigns['targeting'].apply(extract_ids)
+    dfCampaigns['hotel'] = dfCampaigns['targeting'].apply(lambda x: x[0] if x else None)
     
     st.dataframe(dfCampaigns, width=800)
 
