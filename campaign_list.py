@@ -64,7 +64,7 @@ try:
     if response.status_code == 200:
         #st.write("Request successful!")
         #print(response.text)
-        st.write("token is:")
+        #st.write("token is:")
         data = json.loads(response.text)
         lwa_token = data['access_token']
         #st.write(lwa_token)
@@ -217,6 +217,8 @@ if st.button('Submit to fetch campaigns'):
     dfCampaigns['hotel'] = dfCampaigns['hotel'].map(hotelDict)
     
     ##############
+    dfCampaigns['rooms'] = dfCampaigns['targeting'].apply(len)
+    dfCampaigns = dfCampaigns[['campaignId','hotel','locale','body','title','img']]
     
     st.dataframe(dfCampaigns, width=800)
 
