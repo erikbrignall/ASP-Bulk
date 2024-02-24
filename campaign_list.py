@@ -131,8 +131,14 @@ if st.button('Submit to fetch campaigns'):
                     # There might be multiple content values in each variant
                     for content_value in variant['content']['values']:
                         locale = content_value['locale']
-                        body = content_value['datasources']['displayText']['body']
-                        title = content_value['datasources']['displayText']['title']
+                        try:
+                            body = content_value['datasources']['displayText']['body']
+                        except:
+                            body = "error"
+                        try: 
+                            title = content_value['datasources']['displayText']['title']
+                        except:
+                            body = "error"
                         img = content_value['datasources']['background']['backgroundImageSource']
     
     
