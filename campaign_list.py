@@ -239,7 +239,7 @@ if st.button('Submit to fetch campaigns'):
         file_name='campaign_ids.csv',
         mime='text/csv',
         )
-
+    '''
     # Campaign deletion form
     with st.form("my_form"):
         st.header("Delete campaign - work in progress..")
@@ -268,3 +268,4 @@ if st.button('Submit to fetch campaigns'):
                 st.write("Request failed with status code:", response.status_code)
                 
             #print(response)
+'''
