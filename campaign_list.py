@@ -230,6 +230,13 @@ if st.button('Submit to fetch campaigns'):
     
     st.dataframe(dfCampaigns, width=800)
 
+    # Convert the desired column to a comma-separated string
+    campaignlist = ', '.join([str(x) for x in dfCampaigns['campaignId']])
+    
+    # Display the comma-separated list in Streamlit
+    st.header("Campaign ID list")
+    st.write(f"{campaignlist}")
+
     def convert_df_to_csv(dfCampaigns):
         return dfCampaigns.to_csv().encode('utf-8')
 
@@ -239,33 +246,4 @@ if st.button('Submit to fetch campaigns'):
         file_name='campaign_ids.csv',
         mime='text/csv',
         )
-    
-    # Campaign deletion form
-    with st.form("my_form"):
-        st.header("Delete campaign - work in progress..")
-        delCam = st.text_input("Enter campaign id to delete. NOTE: THIS CANNOT BE REVERSED")
-        # Every form must have a submit button.
-        submitted = st.form_submit_button("Submit")
-        if submitted:
-            # This block runs if the user clicks the submit button
-            st.write("You submitted:", delCam)
-            
-            url = "https://api.eu.amazonalexa.com/v1/proactive/campaigns/" + delCam
-        
-            headers = {
-                "Host": "api.eu.amazonalexa.com",
-                "Accept": "application/json",
-                "Authorization": f"Bearer {lwa_token}"
-            }
-            
-            #Making the GET request
-            response = requests.delete(url, headers=headers)
-            
-            # Checking if the request was successful
-            if response.status_code == 202:
-                st.write("Deletion successful!")
-            else:
-                st.write("Request failed with status code:", response.status_code)
-                
-            #print(response)
 
