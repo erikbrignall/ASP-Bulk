@@ -230,13 +230,6 @@ if st.button('Submit to fetch campaigns'):
     
     st.dataframe(dfCampaigns, width=800)
 
-    # Convert the desired column to a comma-separated string
-    campaignlist = ', '.join([str(x) for x in dfCampaigns['campaignId']])
-    
-    # Display the comma-separated list in Streamlit
-    st.header("Campaign ID list")
-    st.write(f"{campaignlist}")
-
     def convert_df_to_csv(dfCampaigns):
         return dfCampaigns.to_csv().encode('utf-8')
 
@@ -247,3 +240,11 @@ if st.button('Submit to fetch campaigns'):
         mime='text/csv',
         )
 
+    # Convert the desired column to a comma-separated string
+    campaignlist = ', '.join([str(x) for x in dfCampaigns['campaignId']])
+    
+    # Display the comma-separated list in Streamlit
+    st.header("Campaign ID list")
+    st.write(f"{campaignlist}")
+
+    
