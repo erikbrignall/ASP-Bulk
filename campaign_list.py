@@ -134,11 +134,11 @@ if st.button('Submit to fetch campaigns'):
                         try:
                             body = content_value['datasources']['displayText']['body']
                         except:
-                            body = "error"
+                            body = content_value['datasources']['displayText']['primaryText']
                         try: 
                             title = content_value['datasources']['displayText']['title']
                         except:
-                            body = "error"
+                            title = content_value['datasources']['displayText']['secondaryText']
                         img = content_value['datasources']['background']['backgroundImageSource']
     
     
