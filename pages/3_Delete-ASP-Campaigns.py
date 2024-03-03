@@ -81,8 +81,11 @@ st.header('Modal Systems - Delete Campaign')
 
 def process_id(id_value):
         st.write("You submitted:", id_value)
+        id_value = id_value.replace(" ", "")
 
         url = "https://api.eu.amazonalexa.com/v1/proactive/campaigns/" + id_value
+
+        st.write(url)
 
         headers = {
             "Host": "api.eu.amazonalexa.com",
