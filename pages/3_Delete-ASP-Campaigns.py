@@ -91,13 +91,13 @@ def process_id(id_value):
         }
 
         #Making the GET request
-        response = requests.delete(url, headers=headers)
+        #response = requests.delete(url, headers=headers)
 
         # Checking if the request was successful
-        if response.status_code == 202:
-            st.write("Deletion successful!")
-        else:
-            st.write("Request failed with status code:", response.status_code)
+        #if response.status_code == 202:
+        #    st.write("Deletion successful!")
+        #else:
+        #    st.write("Request failed with status code:", response.status_code)
 
         #print(response)
 
@@ -117,8 +117,8 @@ if st.button('Campaign Ids to delete'):
         
         # Iterating through the list of IDs and processing each
         for id_val in id_list:
-            #result = process_id(id_val)
-            st.write('this will run the delete function')
+            result = process_id(id_val)
+            st.write('Deleting campaign:')
             st.write(id_val)
         
         # Displaying the results
