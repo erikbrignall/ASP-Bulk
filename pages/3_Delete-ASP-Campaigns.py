@@ -110,13 +110,15 @@ if st.button('Campaign Ids to delete'):
     if ids_input:
         # Splitting the input string into a list of IDs (as strings), then converting to integers
         id_list = ids_input.split(',')
+        print(id_list)
         
         # Initializing an empty list to hold processed results
         results = []
         
         # Iterating through the list of IDs and processing each
         for id_val in id_list:
-            result = process_id(id_val)
+            #result = process_id(id_val)
+            st.write('this will run the delete function')
             print(id_val)
         
         # Displaying the results
