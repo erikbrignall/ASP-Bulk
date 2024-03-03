@@ -94,13 +94,13 @@ def process_id(id_value):
         }
 
         #Making the GET request
-        #response = requests.delete(url, headers=headers)
+        response = requests.delete(url, headers=headers)
 
         # Checking if the request was successful
-        #if response.status_code == 202:
-        #    st.write("Deletion successful!")
-        #else:
-        #    st.write("Request failed with status code:", response.status_code)
+        if response.status_code == 202:
+            st.write("Deletion successful!")
+        else:
+            st.write("Request failed with status code:", response.status_code)
 
         #print(response)
 
