@@ -119,7 +119,7 @@ if st.button('Campaign Ids to delete'):
         for id_val in id_list:
             #result = process_id(id_val)
             st.write('this will run the delete function')
-            print(id_val)
+            st.write(id_val)
         
         # Displaying the results
         st.write('Deletion completed')
