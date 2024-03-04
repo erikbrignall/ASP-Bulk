@@ -10,7 +10,7 @@ import hmac
 # password module
 st.title('ASP Bulk Management tools')
 
-st.header('Enter password for a new token')
+#st.header('Enter password for a new token')
 
 def check_password():
     """Returns `True` if the user had the correct password."""
@@ -65,7 +65,7 @@ try:
     if response.status_code == 200:
         #st.write("Request successful!")
         #print(response.text)
-        st.write("token is:")
+        #st.write("token is:")
         data = json.loads(response.text)
         lwa_token = data['access_token']
         #st.write(lwa_token)
