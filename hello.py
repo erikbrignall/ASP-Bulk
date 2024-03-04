@@ -45,12 +45,12 @@ if not check_password():
 
 ############################
     
-st.write('Please select the action you would like to take on the left. The current functions are:')
+st.write('Please select the action you would like to take on the left. The functions are:')
 st.markdown(
 """
-- Get unit IDs by hotel
-- Get Campaign List
-- Delete Campaigns
+- Get unit IDs by hotel (Live) - Get a list of the unit IdS by hotel
+- Get Campaign List (Live) - See all campaign information and download summary table
+- Delete Campaigns (Live) - Delete 1 or more campaigns
 - Adding Campaigns in bulk through CSV upload (Work in progress)
 - Enabling skills in bulk (Work in progress)
 """
