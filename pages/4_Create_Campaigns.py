@@ -97,10 +97,10 @@ def validate_dataframe(df):
     #    return "One or more entries in the 'image' column are not valid URLs."
     
     # Validate 'locale' with ISO standard language_locale format (e.g., en-GB)
-    try:
-        df['locale'].apply(lambda x: Language.get(x).to_tag())
-    except ValueError as e:
-        return f"Locale format error: {e}"
+    #try:
+    #    df['locale'].apply(lambda x: Language.get(x).to_tag())
+    #except ValueError as e:
+    #    return f"Locale format error: {e}"
     
     return "Validation passed successfully!"
 
