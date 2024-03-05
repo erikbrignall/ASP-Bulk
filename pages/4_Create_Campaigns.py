@@ -8,7 +8,8 @@ import hmac
 import io
 
 ############################
-# password module
+# CHECK PASSWORD MODULE
+
 st.title('ASP Bulk Management tools')
 
 #st.header('Enter password for a new token')
@@ -43,6 +44,7 @@ if not check_password():
 
 ############################
 # FETCH UP TO DATE API TOKEN 
+
 url = "https://api.amazon.com/auth/o2/token"
 
 rtoken = st.secrets["rtoken"]
@@ -78,6 +80,33 @@ except:
     st.stop()
 
 ####################################  
+# FUNCTION TO VALIDATE DATAFRAME
+
+def validate_dataframe(df):
+    # Check column headers
+    required_columns = ['title', 'body', 'image', 'locale','start','end']
+    if not all(column in df.columns for column in required_columns):
+        return "The uploaded CSV does not contain the required columns: title, body, image, locale."
+    
+    # Validate 'title' and 'body' as strings
+    if df['title'].dtype != object or df['body'].dtype != object:
+        return "Columns 'title' and 'body' must be of type string."
+    
+    # Validate 'image' as URLs
+    #if not df['image'].apply(lambda x: validators.url(x)).all():
+    #    return "One or more entries in the 'image' column are not valid URLs."
+    
+    # Validate 'locale' with ISO standard language_locale format (e.g., en-GB)
+    try:
+        df['locale'].apply(lambda x: Language.get(x).to_tag())
+    except ValueError as e:
+        return f"Locale format error: {e}"
+    
+    return "Validation passed successfully!"
+
+
+####################################
+# PAGE BODY
 st.header('Modal Systems - Bulk Add Campaigns - No Link')
 
 st.write("Please upload CSV file containing campaigns you wish to add")
@@ -89,7 +118,12 @@ if uploaded_file is not None:
     stringio = io.StringIO(uploaded_file.getvalue().decode("utf-8"))
     df = pd.read_csv(stringio)
     
-    st.dataframe(df, width=800)
+    # Validate the DataFrame
+    validation_message = validate_dataframe(df)
+    st.write(validation_message)
+    
+    if validation_message == "Validation passed successfully!":
+        st.dataframe(df, width=800)
     
     
 
