@@ -137,7 +137,7 @@ if uploaded_file is not None:
                 
                 goforit = "notyet"
                 
-                if goforit == "chocsaway";
+                if goforit == "chocsaway":
                     url = 'https://api.eu.amazonalexa.com/v1/proactive/campaigns'
                     #skill_id = 'amzn1.ask.skill.14813353-63d8-427b-8963-4545b9d85ba6' #will need updating for new skill
 
