@@ -117,7 +117,7 @@ if uploaded_file is not None:
         st.write("Please upload CSV file containing unit IDs you wish to add campaigns to.")
         st.write("File must include headers: unit_ids, name")
         
-        dfids = ['unit_ids', 'name']
+        dfidcols = ['unit_ids', 'name']
         uploaded_ids = st.file_uploader("Choose unit CSV file", type="csv")
         
         if uploaded_ids is not None:
@@ -125,7 +125,7 @@ if uploaded_file is not None:
             stringio = io.StringIO(uploaded_ids.getvalue().decode("utf-8"))
             dfIds = pd.read_csv(stringio)
             
-            validation_message2 = validate_dataframe(df,dfids)
+            validation_message2 = validate_dataframe(dfIds,dfidcols)
             if validation_message2 == "Validation passed successfully!":
                 st.write(validation_message)
                 st.dataframe(dfIds, width=400)
