@@ -111,7 +111,7 @@ if uploaded_file is not None:
     
     if validation_message == "Validation passed successfully!":
         st.write(validation_message)
-        st.dataframe(df, width=800)
+        st.dataframe(df_campaigns, width=800)
         
         # upload unit list
         st.write("Please upload CSV file containing unit IDs you wish to add campaigns to.")
@@ -128,7 +128,107 @@ if uploaded_file is not None:
             validation_message2 = validate_dataframe(dfIds,dfidcols)
             if validation_message2 == "Validation passed successfully!":
                 st.write(validation_message)
-                st.dataframe(dfIds, width=400)
+                st.dataframe(dfIds, width=800)
+                unit_ids = dfIds['unit_ids'].to_list()
+                unit_ids = [{"id": value} for value in unit_ids]
+                
+                ####################################
+                # Create campaigns and apply to units
+                
+                goforit = "notyet"
+                
+                if goforit == "chocsaway";
+                    url = 'https://api.eu.amazonalexa.com/v1/proactive/campaigns'
+                    #skill_id = 'amzn1.ask.skill.14813353-63d8-427b-8963-4545b9d85ba6' #will need updating for new skill
+
+                    for index, row in df_campaigns.iterrows():
+
+                        # Headers including LWA verification token
+                        headers = {
+                            'Authorization': f'Bearer {lwa_token}',
+                            'Content-Type': 'application/json'
+                        }
+
+                        title = row['title']
+                        body = row['body']
+                        image = row['image']
+                        locale = row['locale']
+
+                        start_date = row['start']
+                        start_date = datetime.strptime(start_date, "%d/%m/%Y")
+                        start_date = start_date.strftime("20%y-%m-%dT10:00:00.00Z")
+
+                        end_date = row['end']
+                        end_date = datetime.strptime(end_date, "%d/%m/%Y")
+                        end_date = end_date.strftime("20%y-%m-%dT10:00:00.00Z")
+
+
+                        # iterate through campaigns 1 by 1
+                        # create log for campaigns or units that fail
+
+
+                        # Body parameters
+                        body = {
+                               "suggestion": {
+                                  "variants": [
+                                     {
+                                        "placement": {
+                                           "channel": "HOME"
+                                        },
+                                        "content": {
+                                           "values": [
+                                              {
+                                                "locale": f"{locale}",
+                                                "document": {
+                                                   "type": "Link",
+                                                   "src": "doc://alexa/apl/documents/enterprise/suggestions/home/defaultTemplate"
+                                                },
+                                                "datasources": {
+                                                   "displayText": {
+                                                    "primaryText": f"{title}",
+                                                    "secondaryText": f"{body}",    
+                                                   },
+                                                   "background": {
+                                                      "backgroundImageSource": f"{image}"
+                                                   }
+                                                }
+                                              }
+
+                                            ]
+                                        }
+                                    }]
+                               },
+                               "targeting": {
+                                  "type": "UNITS",
+                                  "values": unit_ids
+
+                               },
+                               "scheduling": {
+                                  "activationWindow": {
+                                     "start": f"{start_date}",
+                                     "end": f"{end_date}"
+                                  }
+                               }
+                            }
+
+
+                        
+                        st.write(title)
+
+                        try:
+                            # Making the POST request
+                            response = requests.post(url, json=body, headers=headers)
+
+                            # Checking if the request was successful
+                            if response.status_code == 200:
+                                st.write("Request successful!")
+                                st.write(response.text)
+                            else:
+                                st.write("Request returned status code:", response.status_code)
+                                st.write(response.text)
+                        except Exception as e:
+                            error_log = error_log.append(en_title)
+                        time.sleep(0.2)
     
     
 
