@@ -6,7 +6,7 @@ import time
 import streamlit as st
 import hmac
 import io
-import datetime
+from datetime import datetime
 
 ############################
 # CHECK PASSWORD MODULE
