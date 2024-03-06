@@ -102,12 +102,12 @@ uploaded_file = st.file_uploader("Choose campaign CSV file", type="csv")
 if uploaded_file is not None:
     # To read csv file
     stringio = io.StringIO(uploaded_file.getvalue().decode("utf-8"))
-    df = pd.read_csv(stringio)
+    df_campaigns = pd.read_csv(stringio)
     
     dfheaders = ['title', 'body', 'image', 'locale','start','end']
 
     # Validate the DataFrame
-    validation_message = validate_dataframe(df,dfheaders)
+    validation_message = validate_dataframe(df_campaigns,dfheaders)
     
     if validation_message == "Validation passed successfully!":
         st.write(validation_message)
