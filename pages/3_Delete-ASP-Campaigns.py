@@ -107,6 +107,9 @@ def process_id(id_value):
 
 # Text input for comma-separated IDs
 ids_input = st.text_input('Enter IDs, separated by commas:', '')
+st.write("Example:")
+st.write("Single Campaign: 4b61c2e0-f89a-4c97-a99d-bcc6b8b34fr4")
+st.write("Multiple Campaign: 4b61c2e0-f89a-4c97-a99d-bcc6b8b91d18,73f181dd-3b8e-4b8a-b20f-3853225456gy")
 
 # Button to trigger processing
 if st.button('Campaign Ids to delete'):
