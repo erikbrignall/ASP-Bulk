@@ -82,28 +82,14 @@ except:
 ####################################  
 # FUNCTION TO VALIDATE DATAFRAME
 
-def validate_dataframe(df):
+def validate_dataframe(df,cols):
     # Check column headers
-    required_columns = ['title', 'body', 'image', 'locale','start','end']
+    #required_columns = ['title', 'body', 'image', 'locale','start','end']
+    required_columns = cols
     if not all(column in df.columns for column in required_columns):
-        return "The uploaded CSV does not contain the required columns: title, body, image, locale."
-    
-    # Validate 'title' and 'body' as strings
-    if df['title'].dtype != object or df['body'].dtype != object:
-        return "Columns 'title' and 'body' must be of type string."
-    
-    # Validate 'image' as URLs
-    #if not df['image'].apply(lambda x: validators.url(x)).all():
-    #    return "One or more entries in the 'image' column are not valid URLs."
-    
-    # Validate 'locale' with ISO standard language_locale format (e.g., en-GB)
-    #try:
-    #    df['locale'].apply(lambda x: Language.get(x).to_tag())
-    #except ValueError as e:
-    #    return f"Locale format error: {e}"
-    
+        return "The uploaded CSV does not contain the required columns"
+  
     return "Validation passed successfully!"
-
 
 ####################################
 # PAGE BODY
