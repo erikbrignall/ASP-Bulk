@@ -112,18 +112,37 @@ st.header('Modal Systems - Bulk Add Campaigns - No Link')
 st.write("Please upload CSV file containing campaigns you wish to add")
 st.write("File must include headers: title, body, image, locale, start, end (e.g. es-ES")
 
-uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+uploaded_file = st.file_uploader("Choose campaign CSV file", type="csv")
 if uploaded_file is not None:
     # To read csv file
     stringio = io.StringIO(uploaded_file.getvalue().decode("utf-8"))
     df = pd.read_csv(stringio)
     
+    dfheaders = ['title', 'body', 'image', 'locale','start','end']
+
     # Validate the DataFrame
-    validation_message = validate_dataframe(df)
-    st.write(validation_message)
+    validation_message = validate_dataframe(df,dfheaders)
     
     if validation_message == "Validation passed successfully!":
+        st.write(validation_message)
         st.dataframe(df, width=800)
+        
+        # upload unit list
+        st.write("Please upload CSV file containing unit IDs you wish to add campaigns to.")
+        st.write("File must include headers: unit_ids, name")
+        
+        dfids = ['unit_ids', 'name']
+        uploaded_ids = st.file_uploader("Choose unit CSV file", type="csv")
+        
+        if uploaded_ids is not None:
+            # To read csv file
+            stringio = io.StringIO(uploaded_ids.getvalue().decode("utf-8"))
+            dfIds = pd.read_csv(stringio)
+            
+            validation_message2 = validate_dataframe(df,dfids)
+            if validation_message2 == "Validation passed successfully!":
+                st.write(validation_message)
+                st.dataframe(dfIds, width=400)
     
     
 
