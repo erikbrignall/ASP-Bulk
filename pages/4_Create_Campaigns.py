@@ -135,11 +135,10 @@ if uploaded_file is not None:
                 ####################################
                 # Create campaigns and apply to units
                 
-                goforit = "notyet"
+                runupload = st.text_input('Enter some text')
                 
-                if goforit == "chocsaway":
+                if runupload == "chocsaway":
                     url = 'https://api.eu.amazonalexa.com/v1/proactive/campaigns'
-                    #skill_id = 'amzn1.ask.skill.14813353-63d8-427b-8963-4545b9d85ba6' #will need updating for new skill
 
                     for index, row in df_campaigns.iterrows():
 
