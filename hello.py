@@ -51,7 +51,7 @@ st.markdown(
 - Get unit IDs by hotel (Live) - Get a list of the unit Ids by hotel
 - Get Campaign List (Live) - See all campaign information and download summary table
 - Delete Campaigns (Live) - Delete 1 or more campaigns
-- Adding Campaigns in bulk through CSV upload (Work in progress)
+- Adding Campaigns in bulk through CSV upload (Inclusion of skill connected cards in progress)
 - Enabling skills in bulk (Work in progress)
 """
 )
