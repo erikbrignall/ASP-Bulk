@@ -109,6 +109,9 @@ if uploaded_file is not None:
 
     # Validate the DataFrame
     validation_message = validate_dataframe(df_campaigns,dfheaders)
+
+    if validation_message == "The uploaded CSV does not contain the required columns":
+        st.write("csv does not contain the required column headers")
     
     if validation_message == "Validation passed successfully!":
         st.write(validation_message)
