@@ -97,7 +97,7 @@ def validate_dataframe(df,cols):
 st.header('Modal Systems - Bulk Add Campaigns - No Link')
 
 st.write("Please upload CSV file containing campaigns you wish to add")
-st.write("File must include headers: title, body, image, locale (e.g. es-ES), start, end (date format DD/MM/YYYY)"
+st.write("File must include headers: title, body, image, locale (e.g. es-ES), start, end (date format DD/MM/YYYY)")
 
 uploaded_file = st.file_uploader("Choose campaign CSV file", type="csv")
 if uploaded_file is not None:
