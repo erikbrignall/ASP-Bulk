@@ -7,6 +7,7 @@ import streamlit as st
 import hmac
 
 
+
 ############################
 # password module
 st.header('Enter password for a new token')
@@ -42,12 +43,12 @@ if not check_password():
 # FETCH UP TO DATE API TOKEN 
 url = "https://api.modal.systems/user/login"
 
-user2 = st.secrets["user2"]
+username = st.secrets["user2"]
 pw = st.secrets["pw"]
 
 try:
     body = {
-    "username":f"{user2}",
+    "username":f"{username}",
     "password":f"{pw}"
     }
     response = requests.post(url, json=body)
