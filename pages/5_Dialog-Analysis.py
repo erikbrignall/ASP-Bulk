@@ -39,8 +39,8 @@ if not check_password():
 # FETCH UP TO DATE API TOKEN 
 url = "https://api.modal.systems/user/login"
 
-username = st.secrets["user"]
-pw = st.secrets["password"]
+username = st.secrets["username"]
+pw = st.secrets["pw"]
 
 try:
     body = {
