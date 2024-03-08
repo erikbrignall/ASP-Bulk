@@ -6,7 +6,9 @@ import time
 import streamlit as st
 import hmac
 
-
+username = st.secrets["user2"]
+print(username)
+pw = st.secrets["pw"]
 
 ############################
 # password module
