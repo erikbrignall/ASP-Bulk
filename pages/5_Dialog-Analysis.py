@@ -12,7 +12,7 @@ import hmac
 
 ############################
 # password module
-st.header('Enter password for a new token')
+st.header('Get CSV file of all dialogs by date')
 
 def check_password():
     """Returns `True` if the user had the correct password."""
