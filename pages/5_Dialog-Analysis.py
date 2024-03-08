@@ -7,9 +7,8 @@ import streamlit as st
 import hmac
 
 #username = st.secrets["logusername"]
-username = "erik@modal.systems"
-print(username)
-pw = st.secrets["pw"]
+#st.write(username)
+#pw = st.secrets["pw"]
 
 ############################
 # password module
@@ -46,8 +45,8 @@ if not check_password():
 # FETCH UP TO DATE API TOKEN 
 url = "https://api.modal.systems/user/login"
 
-username = st.secrets["user2"]
-pw = st.secrets["pw"]
+#username = st.secrets["user2"]
+#pw = st.secrets["pw"]
 
 try:
     body = {
