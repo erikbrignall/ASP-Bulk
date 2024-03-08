@@ -80,7 +80,7 @@ st.write(start)
 end = end_date.strftime('%Y-%m-%d')
 st.write(end)
 
-if x == "1234:
+if x == "1234":
     body = {"startTime": f"{start}", "endTime": f"{end}"}
     #initiate dataframe
     #columns=['userID','sessionID','requestDescription','requestIntent','requestTimestamp','responseText','responseTimestamp','slots','locale']
