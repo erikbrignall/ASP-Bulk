@@ -47,7 +47,7 @@ pw = st.secrets["pw"]
 
 try:
     body = {
-    "username":f"{username}",
+    "username":f"{user2}",
     "password":f"{pw}"
     }
     response = requests.post(url, json=body)
