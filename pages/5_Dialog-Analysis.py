@@ -75,9 +75,9 @@ start = st.date_input('Start date')
 end = st.date_input('End date')
 
 # Format the dates as strings in the specified format
-start = start_date.strftime('%Y-%m-%d')
+start = start.strftime('%Y-%m-%d')
 st.write(start)
-end = end_date.strftime('%Y-%m-%d')
+end = end.strftime('%Y-%m-%d')
 st.write(end)
 
 if x == "1234":
