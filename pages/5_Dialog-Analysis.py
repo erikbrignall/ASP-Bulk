@@ -139,11 +139,11 @@ if end is not None:
     
     dfFinal['date'] = df['requestTimestamp'].dt.strftime('%d-%m-%Y')
     
-    st.dataframe(dfRoom, width=800)
+    st.dataframe(dfFinal, width=800)
     
     
     def convert_df_to_csv(dfRoom):
-        return dfRoom.to_csv().encode('utf-8')
+        return dfFinal.to_csv().encode('utf-8')
     
     st.download_button(
         label="Download data as CSV",
