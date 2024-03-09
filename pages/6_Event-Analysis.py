@@ -1,0 +1,141 @@
+import requests
+import pandas as pd
+import json
+from datetime import datetime, timedelta
+import time
+import streamlit as st
+import hmac
+
+############################
+# password module
+st.header('Get CSV file of all events by date')
+
+def check_password():
+    """Returns `True` if the user had the correct password."""
+
+    def password_entered():
+        """Checks whether a password entered by the user is correct."""
+        if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]  # Don't store the password.
+        else:
+            st.session_state["password_correct"] = False
+
+    # Return True if the password is validated.
+    if st.session_state.get("password_correct", False):
+        return True
+
+    # Show input for password.
+    st.text_input(
+        "Password", type="password", on_change=password_entered, key="password"
+    )
+    if "password_correct" in st.session_state:
+        st.error("😕 Password incorrect")
+    return False
+
+
+if not check_password():
+    st.stop()  # Do not continue if check_password is not True.
+
+###############################
+# FETCH UP TO DATE API TOKEN 
+url = "https://api.modal.systems/user/login"
+
+username = st.secrets["logusername"]
+pw = st.secrets["pw"]
+
+try:
+    body = {
+    "username":f"{username}",
+    "password":f"{pw}"
+    }
+    response = requests.post(url, json=body)
+    data = json.loads(response.text)
+    token = data['token']
+    cookies = {"_auth": f"{token}"}
+    #print(cookies)
+    
+except:
+    st.write("Failure to login")
+    
+# Create two date input widgets for the start and end dates
+start = st.date_input('Start date')
+end = st.date_input('End date')
+
+# Format the dates as strings in the specified format
+start = start.strftime('%Y-%m-%d')
+end = end.strftime('%Y-%m-%d')
+
+if end is not None:
+    body = {"startTime": f"{start}", "endTime": f"{end}"}
+
+    columns=["ID","property","room","triggerTime", "responseTime","event","user_id","eventType","locale"]
+    
+    dfFinal = pd.DataFrame(columns=columns)
+    dfFinal = dfFinal.drop(dfFinal.index)
+    
+    languages = ["en","es"]
+    
+    for lang in languages:
+    
+        language = lang
+        url = "https://api.modal.systems/analytics/channel/eventTable/nhhotels-voice-" + language
+
+        # Making a POST request with the cookie
+        response = requests.post(url, cookies=cookies, data=body)
+        parsed_json = json.loads(response.text)
+
+        rows = []
+
+        # Iterate through the JSON structure
+        for entry in parsed_json["data"]:
+            response_time = entry["time"]
+            request_trigger = entry["trigger"]
+            request_id = entry["_id"]
+            user_id = entry["userId"]
+            try:
+                hotel = entry["event"]["propertyDetails"]["property"]["apiId"] 
+            except:
+                hotel = "not shown"
+            try:
+                request_event = entry["event"]["url"]
+            except:    
+                try:
+                    request_event = entry["event"]["error"]["config"]["url"]
+                except:
+                    request_event = "error"
+            try:
+                room = entry["event"]["propertyDetails"]["room"] 
+            except:
+                room = "not shown" 
+
+            event_type = entry["eventType"]
+            locale = lang
+
+            # Append the details as a new row
+            rows.append([request_id,hotel,room,request_trigger, response_time, request_event,user_id,event_type,locale])
+
+        # Create a DataFrame
+        df = pd.DataFrame(rows, columns=["ID","property","room","triggerTime", "responseTime","event","user_id","eventType","locale"])
+
+        # Display the DataFrame
+        df['triggerTime'] = pd.to_datetime(df['triggerTime'])
+        df['responseTime'] = pd.to_datetime(df['responseTime'])
+        df['time_diff_ms'] = (df['responseTime'] - df['triggerTime']).dt.total_seconds() * 1000
+        df = df.replace(r'\n|\r', '', regex=True)
+        #dfFinal = dfFinal.append(df, ignore_index=True)
+        dfFinal = pd.concat([dfFinal, df], ignore_index=True)
+        time.sleep(2)
+        
+    dfFinal['date'] = dfFinal['triggerTime'].dt.strftime('%d-%m-%Y')
+    st.dataframe(dfFinal, width=800)
+    
+    def convert_df_to_csv(dfFinal):
+        return dfFinal.to_csv().encode('utf-8')
+    
+    st.download_button(
+        label="Download data as CSV",
+        data=convert_df_to_csv(dfFinal),
+        file_name='dialogs.csv',
+        mime='text/csv',
+        )
