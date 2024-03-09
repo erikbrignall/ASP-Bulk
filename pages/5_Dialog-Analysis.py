@@ -6,10 +6,6 @@ import time
 import streamlit as st
 import hmac
 
-#username = st.secrets["logusername"]
-#st.write(username)
-#pw = st.secrets["pw"]
-
 ############################
 # password module
 st.header('Get CSV file of all dialogs by date')
