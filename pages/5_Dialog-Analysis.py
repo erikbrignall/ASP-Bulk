@@ -84,6 +84,7 @@ if end is not None:
     columns=['userID','hotel','sessionID','requestDescription','requestIntent','requestTimestamp','responseText','responseTimestamp','slots','locale']
     
     dfFinal = pd.DataFrame(columns=columns)
+    dfFinal = dfFinal.drop(dfFinal.index)
     
     languages = ["en","es"]
     
