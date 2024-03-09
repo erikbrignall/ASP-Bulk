@@ -132,7 +132,8 @@ if end is not None:
         
         df.columns = cols
         df = df.replace(r'\n|\r', '', regex=True)
-        dfFinal = dfFinal.append(df, ignore_index=True)
+        #dfFinal = dfFinal.append(df, ignore_index=True)
+        dfFinal = pd.concat([dfFinal, df], ignore_index=True)
         
         time.sleep(2)
     
