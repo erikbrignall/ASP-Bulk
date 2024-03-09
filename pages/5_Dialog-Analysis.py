@@ -72,12 +72,12 @@ end = st.date_input('End date')
 
 # Format the dates as strings in the specified format
 start = start.strftime('%Y-%m-%d')
-st.write(start)
+#st.write(start)
 end = end.strftime('%Y-%m-%d')
-st.write(end)
-x = "235"
+#st.write(end)
+#x = "235"
 
-if x == "1234":
+if end is not None:
     body = {"startTime": f"{start}", "endTime": f"{end}"}
     #initiate dataframe
     #columns=['userID','sessionID','requestDescription','requestIntent','requestTimestamp','responseText','responseTimestamp','slots','locale']
