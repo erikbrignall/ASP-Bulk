@@ -147,7 +147,7 @@ if end is not None:
     
     st.download_button(
         label="Download data as CSV",
-        data=convert_df_to_csv(dfA),
-        file_name='7-days-dialogs.csv',
+        data=convert_df_to_csv(dfFinal),
+        file_name='dialogs.csv',
         mime='text/csv',
         )
