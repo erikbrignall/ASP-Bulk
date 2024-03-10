@@ -143,6 +143,7 @@ if st.button('Click to fetch events'):
         # hotel level summary of successful event counts
         summary_df = dfFinal.copy()
         summary_df = summary_df[summary_df['eventType'] == "api_success"]
+        summary_df = summary_df[~summary_df['room'].str.contains("est")]
         summary_df['event'] = summary_df['event'].str.replace('\d+', '', regex=True)
         summary_df = pd.pivot_table(summary_df, values='triggerTime', index=['property', 'event'], aggfunc='count').rename(columns={'triggerTime': 'Count'})
-        st.dataframe(summary_df, width=400)
+        st.dataframe(summary_df, width=800)
