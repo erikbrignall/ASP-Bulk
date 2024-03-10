@@ -139,7 +139,7 @@ if st.button('Click to fetch events'):
         st.download_button(
             label="Download data as CSV",
             data=convert_df_to_csv(dfFinal),
-            file_name='dialogs.csv',
+            file_name='events.csv',
             mime='text/csv',
             )
 
@@ -158,7 +158,7 @@ if st.button('Click to fetch events'):
         col1, col2, col3 = st.columns(3)
 
         #calculate         
-        api_calls = 1
+        api_calls = dfFinal.shape[0]
         #calculate average success api call percent
         specific_value = 'api_failed'
         value_counts = dfFinal['eventType'].value_counts()
@@ -173,3 +173,20 @@ if st.button('Click to fetch events'):
         col1.metric("API Calls", f"{api_calls}")
         col2.metric("Failed API Percentage", f"{success_percent}%")
         col3.metric("Average response time", f"{response_time}")
+        
+        # Scorecard second row
+        col4, col5 = st.columns(2)
+
+        #Room service orders
+        specific_value = '/stay-api/bot/transaction/room-service/'
+        value_counts = dfFinal['event'].value_counts()
+        rs_orders = value_counts[specific_value]
+
+        #Room service orders
+        specific_value = 'api_failed'
+        value_counts = dfFinal['event'].value_counts()
+        lead_requests = value_counts[specific_value]
+
+        # Display stats using the metric widget
+        col4.metric("Total Room Service Orders", f"{rs_orders}")
+        col5.metric("Total Lead Requests*", f"{lead_requests}")
