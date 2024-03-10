@@ -143,6 +143,8 @@ if st.button('Click to fetch events'):
             mime='text/csv',
             )
 
+        
+        
         # hotel level summary of successful event counts filtering out test room data
         st.header("Event count by type:")
         st.write("(Test data excluded)")
@@ -150,6 +152,7 @@ if st.button('Click to fetch events'):
         summary_df = summary_df[summary_df['eventType'] == "api_success"]
         summary_df = summary_df[~summary_df['room'].str.contains("est")]
         summary_df['event'] = summary_df['event'].str.replace('\d+', '', regex=True)
+        event_counts = summary_df['event'].value_counts()
         summary_df = pd.pivot_table(summary_df, values='triggerTime', index=['property', 'event'], aggfunc='count').rename(columns={'triggerTime': 'Count'})
         st.dataframe(summary_df, width=800)
 
@@ -179,13 +182,11 @@ if st.button('Click to fetch events'):
 
         #Room service orders
         specific_value = '/stay-api/bot/transaction/room-service/'
-        value_counts = dfFinal['event'].value_counts()
-        rs_orders = value_counts[specific_value]
+        rs_orders = event_counts[specific_value]
 
         #Room service orders
-        specific_value = 'api_failed'
-        value_counts = dfFinal['event'].value_counts()
-        lead_requests = value_counts[specific_value]
+        specific_value = '/stay-api/bot/transaction/lead-request/'
+        lead_requests = event_counts[specific_value]
 
         # Display stats using the metric widget
         col4.metric("Total Room Service Orders", f"{rs_orders}")
