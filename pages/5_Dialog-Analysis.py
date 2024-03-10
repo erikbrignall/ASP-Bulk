@@ -166,7 +166,7 @@ if st.button('Click to fetch dialogs'):
         st.header("Event count by type:")
         st.write("(Test data excluded)")
         summary_df = dfFinal.copy()
-        summary_df.loc[summary_df['requestIntent'].str.contains('Alexa.Presentation.APL'), 'Text'] = 'APL content'
+        summary_df['requestIntent'] = summary_df['requestIntent'].str.replace(r'Alexa\.Presentation\.APL\.UserEvent \(.*?\)', 'APL content', regex=True)
         event_counts = summary_df['requestIntent'].value_counts()
         summary_df = pd.pivot_table(summary_df, values='requestTimestamp', index=['requestIntent'], aggfunc='count').rename(columns={'requestTimestamp': 'Count'})
         st.dataframe(summary_df, width=800)
