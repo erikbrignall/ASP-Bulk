@@ -68,7 +68,7 @@ evend = end.strftime('%Y-%m-%d')
 
 if st.button('Click to fetch events'):
     if evend is not None:
-        body = {"evstartTime": f"{start}", "evendTime": f"{end}"}
+        body = {"startTime": f"{evstart}", "endTime": f"{evend}"}
     
         columns=["ID","property","room","triggerTime", "responseTime","event","user_id","eventType","locale"]
         
