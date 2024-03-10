@@ -149,3 +149,15 @@ if st.button('Click to fetch dialogs'):
             file_name='dialogs.csv',
             mime='text/csv',
             )
+
+        st.header("Summary Stats")
+        # Use columns to layout the scorecard stats
+        col1, col2 = st.columns(2)
+        
+        #calculate         
+        sessions = dfFinal['sessionID'].nunique()
+        users = dfFinal['userID'].nunique()
+        
+        # Display stats using the metric widget
+        col1.metric("Total Sessions", f"{sessions}")
+        col2.metric("Total Users", f"{users}")
