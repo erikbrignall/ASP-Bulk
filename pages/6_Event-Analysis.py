@@ -171,5 +171,5 @@ if st.button('Click to fetch events'):
 
         # Display stats using the metric widget
         col1.metric("API Calls", f"{api_calls}")
-        col2.metric("Success Percentage", f"{success_percent}")
+        col2.metric("Failed API Percentage", f"{success_percent}%")
         col3.metric("Average response time", f"{response_time}")
