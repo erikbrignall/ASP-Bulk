@@ -154,4 +154,13 @@ if st.button('Click to fetch events'):
         st.dataframe(summary_df, width=800)
 
         st.header("Summary Stats")
-        
+        # Use columns to layout the scorecard stats
+        col1, col2, col3 = st.columns(3)
+        api_calls = 1
+        success_perecent = 23
+        response_time = 923
+
+        # Display stats using the metric widget
+        col1.metric("API Calls", f"${api_calls:,}")
+        col2.metric("Success Percentage", f"{success_percent}")
+        col3.metric("Average response time", f"{response_time}")
