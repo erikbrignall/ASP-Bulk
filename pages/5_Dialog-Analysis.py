@@ -166,6 +166,7 @@ if st.button('Click to fetch dialogs'):
         st.header("Event count by type:")
         st.write("(Test data excluded)")
         summary_df = dfFinal.copy()
+        summary_df.loc[summary_df['requestIntent'].str.contains('foo'), 'Text'] = 'APL content'
         event_counts = summary_df['requestIntent'].value_counts()
         summary_df = pd.pivot_table(summary_df, values='requestTimestamp', index=['requestIntent'], aggfunc='count').rename(columns={'requestTimestamp': 'Count'})
         st.dataframe(summary_df, width=800)
