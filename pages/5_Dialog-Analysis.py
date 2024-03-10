@@ -161,3 +161,11 @@ if st.button('Click to fetch dialogs'):
         # Display stats using the metric widget
         col1.metric("Total Sessions", f"{sessions}")
         col2.metric("Total Users", f"{users}")
+
+        # hotel level summary of successful event counts filtering out test room data
+        st.header("Event count by type:")
+        st.write("(Test data excluded)")
+        summary_df = dfFinal.copy()
+        event_counts = summary_df['requestIntent'].value_counts()
+        summary_df = pd.pivot_table(summary_df, values='requestTimestamp', index=['requestIntent'], aggfunc='count').rename(columns={'requestTimestamp': 'Count'})
+        st.dataframe(summary_df, width=800)
