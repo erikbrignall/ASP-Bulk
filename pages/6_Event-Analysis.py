@@ -157,7 +157,7 @@ if st.button('Click to fetch events'):
         # Use columns to layout the scorecard stats
         col1, col2, col3 = st.columns(3)
         api_calls = 1
-        success_perecent = 23
+        success_percent = 23
         response_time = 923
 
         # Display stats using the metric widget
