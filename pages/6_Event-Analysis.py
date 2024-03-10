@@ -79,11 +79,10 @@ if st.button('Click to fetch events'):
         
         for lang in languages:
         
-            language = lang
-            url = "https://api.modal.systems/analytics/channel/eventTable/nhhotels-voice-" + language
+            url = "https://api.modal.systems/analytics/channel/eventTable/nhhotels-voice-" + lang
     
             # Making a POST request with the cookie
-            response = requests.post(url, cookies=cookies, data=body)
+            response = requests.post(url, cookies=cookies, json=body)
             parsed_json = json.loads(response.text)
     
             rows = []
