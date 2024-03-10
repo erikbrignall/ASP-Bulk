@@ -170,7 +170,7 @@ if st.button('Click to fetch dialogs'):
         event_counts = summary_df['requestIntent'].value_counts()
         summary_df = pd.pivot_table(summary_df, values='requestTimestamp', index=['requestIntent'], aggfunc='count').rename(columns={'requestTimestamp': 'Count'})
         summary_df = summary_df.sort_values(by='Count', ascending=False)
-        minutes_dict = {'RoomServiceIntent': 10, 'ServiceRequestIntent': 10,'ServiceTimeRequestIntent': 10,'ConfirmOrderIntent': 10,'RequestAmenitiesIntent': 20, 'ConnectWifiIntent': 20, 'RoomDetailsIntent': 20, 'ReceptionIntent': 20, 'LaundryTypeServiceIntent': 20,'NewOrderIntent': 20,'ReceptionServiceTypeIntent': 20,'RequestAmenitiesCategoryIntent': 20}
+        minutes_dict = {'RoomServiceIntent': 30, 'ServiceRequestIntent': 30,'ServiceTimeRequestIntent': 30,'ConfirmOrderIntent': 30,'RequestAmenitiesIntent': 30, 'ConnectWifiIntent': 30, 'RoomDetailsIntent': 30, 'ReceptionIntent': 30, 'LaundryTypeServiceIntent': 30,'NewOrderIntent': 30,'ReceptionServiceTypeIntent': 30,'RequestAmenitiesCategoryIntent': 30}
 
         summary_df = summary_df.reset_index(drop=False)
         # Map prices to products using the dictionary
