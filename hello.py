@@ -52,6 +52,8 @@ st.markdown(
 - Get Campaign List (Live) - See all campaign information and download summary table
 - Delete Campaigns (Live) - Delete 1 or more campaigns
 - Adding Campaigns in bulk through CSV upload (Inclusion of skill connected cards in progress)
+- Generate dialog table and summary stats by date range 
+- Generate event log table and summary stats by date range
 - Enabling skills in bulk (Work in progress)
 """
 )
