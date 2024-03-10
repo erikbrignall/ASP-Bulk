@@ -178,7 +178,7 @@ if st.button('Click to fetch events'):
         col3.metric("Average response time", f"{response_time}")
         
         # Scorecard second row
-        col4, col5 = st.columns(2)
+        col4, col5, col6 = st.columns(3)
 
         #Room service orders
         specific_value = '/stay-api/bot/transaction/room-service/'
