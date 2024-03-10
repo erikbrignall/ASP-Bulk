@@ -156,8 +156,16 @@ if st.button('Click to fetch events'):
         st.header("Summary Stats")
         # Use columns to layout the scorecard stats
         col1, col2, col3 = st.columns(3)
+
+        #calculate         
         api_calls = 1
-        success_percent = 23
+        #calculate average success api call percent
+        specific_value = 'api_failed'
+        value_counts = dfFinal['eventType'].value_counts()
+        total_rows = dfFinal.shape[0]
+        success_percent = (value_counts[specific_value] / total_rows) * 100
+        
+        # calculate average api reponse time
         response_time = dfFinal['time_diff_ms'].mean().round(0)
 
         # Display stats using the metric widget
