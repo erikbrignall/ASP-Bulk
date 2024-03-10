@@ -128,6 +128,7 @@ if st.button('Click to fetch events'):
             time.sleep(2)
             
         dfFinal['date'] = dfFinal['triggerTime'].dt.strftime('%d-%m-%Y')
+        dfFinal = dfFinal[~dfFinal['room'].str.contains("est")]
         st.dataframe(dfFinal, width=800)
         
         def convert_df_to_csv(dfFinal):
