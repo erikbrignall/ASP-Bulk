@@ -164,6 +164,7 @@ if st.button('Click to fetch events'):
         value_counts = dfFinal['eventType'].value_counts()
         total_rows = dfFinal.shape[0]
         success_percent = (value_counts[specific_value] / total_rows) * 100
+        success_percent = success_percent.round(1)
         
         # calculate average api reponse time
         response_time = dfFinal['time_diff_ms'].mean().round(0)
