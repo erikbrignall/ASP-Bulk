@@ -63,11 +63,11 @@ start = st.date_input('Start date')
 end = st.date_input('End date')
 
 # Format the dates as strings in the specified format
-start = start.strftime('%Y-%m-%d')
-end = end.strftime('%Y-%m-%d')
+estart = start.strftime('%Y-%m-%d')
+eend = end.strftime('%Y-%m-%d')
 
-if end is not None:
-    body = {"startTime": f"{start}", "endTime": f"{end}"}
+if eend is not None:
+    body = {"estartTime": f"{start}", "eendTime": f"{end}"}
 
     columns=["ID","property","room","triggerTime", "responseTime","event","user_id","eventType","locale"]
     
