@@ -169,4 +169,5 @@ if st.button('Click to fetch dialogs'):
         summary_df['requestIntent'] = summary_df['requestIntent'].str.replace(r'Alexa\.Presentation\.APL\.UserEvent \(.*?\)', 'APL content', regex=True)
         event_counts = summary_df['requestIntent'].value_counts()
         summary_df = pd.pivot_table(summary_df, values='requestTimestamp', index=['requestIntent'], aggfunc='count').rename(columns={'requestTimestamp': 'Count'})
+        summary_df = summary_df.sort_values(by='Count', ascending=False)
         st.dataframe(summary_df, width=800)
