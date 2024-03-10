@@ -130,6 +130,7 @@ if st.button('Click to fetch events'):
         dfFinal['date'] = dfFinal['triggerTime'].dt.strftime('%d-%m-%Y')
         # below line can be used to remove test data
         #dfFinal = dfFinal[~dfFinal['room'].str.contains("est")]
+        st.header("All events table")
         st.dataframe(dfFinal, width=800)
         
         def convert_df_to_csv(dfFinal):
@@ -143,9 +144,14 @@ if st.button('Click to fetch events'):
             )
 
         # hotel level summary of successful event counts filtering out test room data
+        st.header("Event count by type:")
+        st.write("(Test data excluded)")
         summary_df = dfFinal.copy()
         summary_df = summary_df[summary_df['eventType'] == "api_success"]
         summary_df = summary_df[~summary_df['room'].str.contains("est")]
         summary_df['event'] = summary_df['event'].str.replace('\d+', '', regex=True)
         summary_df = pd.pivot_table(summary_df, values='triggerTime', index=['property', 'event'], aggfunc='count').rename(columns={'triggerTime': 'Count'})
         st.dataframe(summary_df, width=800)
+
+        st.header("Summary Stats")
+        
