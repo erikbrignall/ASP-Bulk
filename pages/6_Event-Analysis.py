@@ -158,7 +158,7 @@ if st.button('Click to fetch events'):
         col1, col2, col3 = st.columns(3)
         api_calls = 1
         success_percent = 23
-        response_time = 923
+        response_time = dfFinal['time_diff_ms'].mean()
 
         # Display stats using the metric widget
         col1.metric("API Calls", f"{api_calls}")
