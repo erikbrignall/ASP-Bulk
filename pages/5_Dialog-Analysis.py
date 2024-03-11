@@ -184,3 +184,22 @@ if st.button('Click to fetch dialogs'):
         summary_df = summary_df[['requestIntent','Count','Minutes Saved']]
         
         st.dataframe(summary_df, width=800)
+
+        # hotel level summary of successful event counts filtering out test room data
+        st.header("Event count by type:")
+        st.write("(Test data excluded)")
+        summary_df2 = dfFinal.copy()
+        summary_df2['requestIntent'] = summary_df2['requestIntent'].str.replace(r'Alexa\.Presentation\.APL\.UserEvent \(.*?\)', 'APL content', regex=True)
+        event_counts = summary_df2['requestIntent'].value_counts()
+        summary_df2 = pd.pivot_table(summary_df, values='requestTimestamp', index=['requestIntent','hotel'], aggfunc='count').rename(columns={'requestTimestamp': 'Count'})
+        summary_df2 = summary_df2.sort_values(by='Count', ascending=False)
+        minutes_dict = {'RoomServiceIntent': 30, 'ServiceRequestIntent': 30,'ServiceTimeRequestIntent': 30,'ConfirmOrderIntent': 30,'RequestAmenitiesIntent': 30, 'ConnectWifiIntent': 30, 'RoomDetailsIntent': 30, 'ReceptionIntent': 30, 'LaundryTypeServiceIntent': 30,'NewOrderIntent': 30,'ReceptionServiceTypeIntent': 30,'RequestAmenitiesCategoryIntent': 30}
+
+        summary_df2 = summary_df2.reset_index(drop=False)
+        # Map prices to products using the dictionary
+        summary_df2['mins'] = summary_df2['requestIntent'].map(minutes_dict).fillna(0)
+        
+        # Calculate revenue (items sold multiplied by price)
+        summary_df2['Minutes Saved'] = (summary_df2['Count'] * summary_df2['mins'])/60
+
+        summary_df2 = summary_df2[['requestIntent','Count','Minutes Saved']]
