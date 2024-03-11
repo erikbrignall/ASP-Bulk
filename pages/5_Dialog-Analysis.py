@@ -191,7 +191,7 @@ if st.button('Click to fetch dialogs'):
         summary_df2 = dfFinal.copy()
         summary_df2['requestIntent'] = summary_df2['requestIntent'].str.replace(r'Alexa\.Presentation\.APL\.UserEvent \(.*?\)', 'APL content', regex=True)
         event_counts = summary_df2['requestIntent'].value_counts()
-        summary_df2 = pd.pivot_table(summary_df, values='requestTimestamp', index=['requestIntent','hotel'], aggfunc='count').rename(columns={'requestTimestamp': 'Count'})
+        summary_df2 = pd.pivot_table(summary_df2, values='requestTimestamp', index=['requestIntent','hotel'], aggfunc='count').rename(columns={'requestTimestamp': 'Count'})
         summary_df2 = summary_df2.sort_values(by='Count', ascending=False)
         minutes_dict = {'RoomServiceIntent': 30, 'ServiceRequestIntent': 30,'ServiceTimeRequestIntent': 30,'ConfirmOrderIntent': 30,'RequestAmenitiesIntent': 30, 'ConnectWifiIntent': 30, 'RoomDetailsIntent': 30, 'ReceptionIntent': 30, 'LaundryTypeServiceIntent': 30,'NewOrderIntent': 30,'ReceptionServiceTypeIntent': 30,'RequestAmenitiesCategoryIntent': 30}
 
