@@ -202,4 +202,6 @@ if st.button('Click to fetch dialogs'):
         # Calculate revenue (items sold multiplied by price)
         summary_df2['Minutes Saved'] = (summary_df2['Count'] * summary_df2['mins'])/60
 
-        summary_df2 = summary_df2[['requestIntent','Count','Minutes Saved']]
+        #summary_df2 = summary_df2[['hotel','requestIntent','Count','Minutes Saved']]
+
+        st.dataframe(summary_df2, width=800)
