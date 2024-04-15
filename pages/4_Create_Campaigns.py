@@ -139,7 +139,7 @@ if uploaded_file is not None:
                 ####################################
                 # Create campaigns and apply to units
                 
-                runupload = st.text_input('Enter some text')
+                runupload = st.text_input('type \"chocsaway\" to run campaign load')
                 
                 if runupload == "chocsaway":
                     url = 'https://api.eu.amazonalexa.com/v1/proactive/campaigns'
