@@ -160,7 +160,8 @@ if st.button('Submit'):
     # View dataframe
     dfRoom['parentName'] = parentName
 
-    dfRoom['name'] = pd.to_numeric(dfRoom['name'], errors='coerce')
+    # test remove the next line to show test rooms
+    #dfRoom['name'] = pd.to_numeric(dfRoom['name'], errors='coerce')
     dfRoom = dfRoom.sort_values(by='name')
     
     st.dataframe(dfRoom, width=800)
