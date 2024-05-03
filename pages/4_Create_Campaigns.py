@@ -102,7 +102,7 @@ st.write("File must include headers: title, body, image, locale (e.g. es-ES), st
 uploaded_file = st.file_uploader("Choose campaign CSV file", type="csv")
 if uploaded_file is not None:
     # To read csv file
-    stringio = io.StringIO(uploaded_file.getvalue().decode("utf-8"))
+    stringio = io.StringIO(uploaded_file.getvalue().decode("latin-1"))
     df_campaigns = pd.read_csv(stringio)
     
     dfheaders = ['title', 'body', 'image', 'locale','start','end']
